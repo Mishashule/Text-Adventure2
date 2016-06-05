@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DedalusWeb Story</title>
+
+    <script src="http://olado.github.io/doT/doT.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="dedalus.js"></script>
+    <script src="dedalus-web.js"></script>
+
+    <link rel="stylesheet" href="themes/plain/story.css">
+ </head>
+<body>
+    <div id="story">
+
+        <initscript>
+        </initscript>
+
+        <beforeEveryThing>
+        </beforeEveryThing>
+
+        <beforeEveryPageTurn>
+        </beforeEveryPageTurn>
+
+        <beforeEveryParagraphShown>
+        </beforeEveryParagraphShown>
+
+        <afterEveryThing>
+        </afterEveryThing>
+
+        <afterEveryPageTurn>
+        </afterEveryPageTurn>
+
+        <afterEveryParagraphShown>
+        </afterEveryParagraphShown>
+
+        <!-- Novel -->
+        <title>Text Adventure</title>
+
+        <!-- Objects -->
+        <obj id="compass" inventoryName="Compass">
+            <action id="Examine">
+Shows the four cardinal directions, why was I given this? (The Compass is a passive item, meant to give you a sense of direction)</action>
+            <action id="Get">
+                <when>!story.isInInventory('compass')</when>
+               You pick up the compass.
+                {{ story.putInInventory('compass'); }}
+            </action></obj>    
+		<obj id="lantern" inventoryName="Lantern">
+            <action id="Examine"> They left me a lantern, what nice people. </action>
+            <action id="Get">
+                <when>!story.isInInventory('lantern')</when>
+               You pick up the lantern.
+                {{ story.putInInventory('lantern'); }}
+            </action>
+</obj>
+		<obj id="knife" inventoryName="Knife">
+            <action id="Examine">A good knife with a razor sharp blade, how did such a nice knife get in a decrepit old house like this? </action>
+            <action id="Get">
+                <when>!story.isInInventory('knife')</when>
+               You pick up the knife.
+                {{ story.putInInventory('knife'); }}
+            </action>
+        </obj>
+        <obj id="dd" inventoryName="DD">
+            <action id="Examine">"Matt was here" is inscribed on the side of this, I wonder what he could be using it for...</action>
+            <action id="Get">
+                <when>!story.isInInventory('dd')</when>
+               You pick up the fabled DD.
+                {{ story.putInInventory('dd'); }}
+            </action>
+        </obj>
+       
+
+        <!-- Pages -->
+        <page id="intro">
+        </page>
+	<page id="start" class="first">
+		<p>This is where I woke up a couple minutes ago, there's what seems to be an astonishingly <turn to="house">old building</turn> to the East. </p>
+		<p>The entire area surrounding the building and this area is an incredibly high rock wall; it looks almost fake. 
+		In front of me, to the north, is a large opening in the side of the wall, it looks like a <turn to="cave">cave.</turn></p>
+		<p>On the ground infront of me there is a <interact with="compass">Compass</interact> and a <interact with="lantern">Lit Lantern</interact></p>
+	</page>
+
+<page id="house">
+		<p>A trashed house, looks like nobody has been here for years. 
+		Everything is boarded up, but the door is caved in, it'd be as easy as <turn to="livingroom">walking through.</turn></p>
+		 <p>The area I woke up in is to the <turn to="start">West.</turn></p>
+	</page>
+
+<page id="livingroom">
+		<p>It seems to be a living room, but it's dusty and musty in here, to the point where it's kind of hard to breathe.
+		 After a quick glance around, anyone could quickly tell that there's nothing of use in here.</p>
+		  <p>Chairs are broken, there's an old shattered television on the far wall, any anything that once resembled a table or container is smashed.</p>
+		  <p> The kitchen looks to be to the <turn to="kitchen">South</turn> of here, and the way out of the house is to the <turn to="house">West</turn> of here.</p>
+	</page>
+
+	<page id="kitchen">
+		<p>I'd be lying if I said this kitchen was any nicer than the living room. The refrigerator door is hanging by one hinge, open; <show paragraph="mold">mold</show> flourishing on the inside.</p>
+		<p>Next to the refrigerator is a table, split in half from mold and decay. Opposite to the fridge and table, there are some kitchen counters, which are covered in dust at least half-an-inch thick.</p>
+		<p>The counter is lined with <show paragraph="dnc">drawers and cabinets</show>. <br>To the <turn to="bedroom">East</turn> is a staircase with only one room at the top, and to the <turn to="livingroom">North</turn> is the living room.</p>
+	 <paragraph id="mold">
+       Gross mold, it might be toxic, i'd better leave it alone.
+    </paragraph>
+    <paragraph id="dnc">
+       You search all the drawers and cabinets, only finding a plethora of dust-bunnies, and a single <interact with="knife">knife.</interact>
+    </paragraph>
+	</page>
+	
+	
+
+    </div>
+
+    <div id="wrapper">
+        <div id="title"></div>
+
+        <div id="inventoryHostWrapper">
+            <h2>Inventory</h2>
+            <div id="inventoryHost"></div>
+        </div>
+
+        <div id="host"></div>
+    </div>
+
+    <div id="interactionHost"></div>
+
+    <div id="undoStageHost"></div>
+
+    <div id="footer">
+		<a id="reseteHost" href="#"><b>Reset</b></a>
+    </div>
+
+    <script>
+        $(function () {
+            new DedalusWeb({
+                domSource         : $('#story'),
+                domTarget         : $('#host'),
+                titleTarget       : $('#title'),
+                inventoryTarget   : $('#inventoryHost'),
+                interactionTarget : $('#interactionHost'),
+                undoTarget        : $('#undoHost'),
+                undoStageTarget   : $('#undoStageHost'),
+                saveTarget        : $('#saveHost'),
+                restoreTarget     : $('#restoreHost'),
+                resetTarget       : $('#reseteHost'),
+            });
+        });
+
+    </script>
+</body>
+</html>
